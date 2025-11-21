@@ -1,4 +1,4 @@
-# Book Recommendation Platform 📚
+# Azure Book Recommendation Platform 📚
 
 ## 개요  
 이 저장소는 **직무/기술 트렌드 기반 도서 추천 플랫폼** 프로젝트를 위한 코드 및 문서 저장소입니다.  
@@ -13,7 +13,7 @@
 
 ## 프로젝트 정보  
 - **프로젝트명** : 직무/기술 트렌드 기반 도서 및 유튜브 영상 추천 플랫폼  
-- **저장소 주소** : `https://github.com/CCPP-1st-team/Book-Recommendation-Platform.git`  
+- **저장소 주소** : `https://github.com/tmdrbs999/Azure-Book-Recommendation-Platform.git`  
 - **프로젝트 기간** : 2025.11.10. ~ 2025.11.20
 - **팀원** : 팀장 : 이정윤 · 팀원 : 고경수, 고승균, 김혁수, 조민기
 - **개발 환경 및 언어** :
