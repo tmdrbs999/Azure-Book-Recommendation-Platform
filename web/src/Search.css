@@ -1,0 +1,1517 @@
+/* 검색 페이지 스타일 */
+.search-page {
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #263238;
+  background: linear-gradient(180deg, #f6fbff 0%, #f2f8fb 50%, #ffffff 100%);
+  min-height: 100vh;
+}
+
+/* 공통 페이지 헤더 */
+.page-header {
+  padding: 8px 28px;
+  background: linear-gradient(90deg, #2196f3 0%, #4caf50 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.08);
+  height: 60px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+.page-logo {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.page-logo:hover {
+  transform: scale(1.05);
+}
+
+.page-logo-image {
+  width: auto;
+  height: 44px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.home-btn {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-decoration: none;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(20px);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.home-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 1.5s ease;
+}
+
+.home-btn:hover::before {
+  left: 100%;
+}
+
+.home-btn:hover {
+  transform: translateY(-50%) translateY(-4px) scale(1.08);
+  box-shadow: 0 12px 40px rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.home-btn:active {
+  transform: translateY(-50%) translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+}
+
+.home-btn::before {
+  content: '🏠';
+  font-size: 16px;
+}
+
+/* 검색 섹션 */
+.search-section {
+  background: transparent;
+  padding: 1rem 2rem;
+  box-shadow: none;
+}
+
+.search-form-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 50px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 0.3rem 0.01rem 0.3rem 0.3rem;
+}
+
+.search-input-page {
+  flex: 1;
+  padding: 1.2rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  background: transparent;
+  color: #333;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.search-input-page::placeholder {
+  color: #666;
+}
+
+.search-input-page:focus {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.search-btn {
+  background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+  border: none;
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+  height: 50px;
+}
+
+.search-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+}
+
+/* 검색 콘텐츠 */
+.search-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 2rem;
+}
+
+/* 검색 콘텐츠 래퍼 - 3단 레이아웃 */
+.search-content-wrapper {
+  display: flex;
+  gap: 1.5rem;
+  max-width: 1600px;
+  margin: 0 auto;
+  align-items: flex-start; /* 상단 정렬로 레이아웃 안정성 확보 */
+}
+
+.search-results-section {
+  flex: 2;
+  min-width: 0;
+  max-width: calc(100% - 620px); /* 양쪽 사이드바 공간 확보 */
+}
+
+.books-section {
+  flex: 0 0 380px; /* 고정 너비를 늘림 */
+  max-width: 380px;
+  min-width: 380px; /* 최소 너비 설정 */
+}
+
+.youtube-section {
+  flex: 0 0 300px; /* 고정 너비로 변경 */
+  max-width: 300px;
+  min-width: 300px; /* 최소 너비 설정 */
+}
+
+.search-results {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+/* 책 목록 섹션 */
+.books-section {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+.explore-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
+}
+
+.carousel {
+  margin-bottom: 2rem;
+}
+
+.carousel-items {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.carousel-items img {
+  width: 150px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.carousel-items img:hover {
+  transform: translateY(-8px);
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #e0e0e0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dot.active {
+  background-color: #2196f3;
+}
+
+/* 버튼 스타일 */
+.btn {
+  padding: 1rem 2.5rem;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.explore-btn {
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  color: white;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.explore-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+}
+
+/* 결과 헤더 */
+.results-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.results-header h2 {
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.search-keyword {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.search-keyword span {
+  color: #2196f3;
+  font-weight: 600;
+}
+
+/* 로딩 스타일 */
+.search-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #e3f2fd;
+  border-top: 4px solid #2196f3;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.search-loading p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+/* 검색 결과 카드 그리드 (기존) */
+.job-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* 새로운 한 줄 형태 공고 목록 */
+.job-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.job-card-horizontal {
+  background: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f0;
+  min-height: 140px;
+  max-height: 140px;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.job-card-horizontal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.12);
+  border-color: #2196f3;
+}
+
+.job-card-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+}
+
+/* 첫 번째 줄: 제목과 회사 */
+.job-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.job-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.job-title h3 {
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.4;
+  word-break: keep-all;
+  /* 제목은 2줄까지 표시 */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  
+}
+
+.job-company {
+  flex-shrink: 0;
+}
+
+.job-company .company-tag {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  border-radius: 15px;
+  white-space: nowrap;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 두 번째 줄: 상세 정보 */
+.job-details {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+  color: #666;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+.job-details span {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.job-details span:before {
+  font-size: 1rem;
+}
+
+.job-card {
+  background: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  height: fit-content;
+}
+
+.job-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: #2196f3;
+}
+
+.job-card-header {
+  margin-bottom: 1rem;
+}
+
+.job-card-header h3 {
+  color: #333;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: 0 0 0.8rem 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  line-clamp: 1;
+  overflow: hidden;
+}
+
+.job-card-header-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.company-tag {
+  background: linear-gradient(45deg, #2196f3, #4caf50);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-block;
+  
+  /* 텍스트 길이 제한 */
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+  box-sizing: border-box;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+}
+
+.job-card-info {
+  margin-bottom: 1rem;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.info-row:last-child {
+  margin-bottom: 0;
+}
+
+.location, .salary, .deadline {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.job-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.job-card-header .job-card-tags {
+  margin-bottom: 0;
+}
+
+.tag {
+  background: rgba(33, 150, 243, 0.1);
+  color: #2196f3;
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* 페이지네이션 */
+.pagination {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 1.5rem 0;
+  padding: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  background: white;
+  border: 2px solid #e0e0e0;
+  color: #666;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  min-width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #f5f5f5;
+  border-color: #2196f3;
+  color: #2196f3;
+  transform: translateY(-1px);
+}
+
+.pagination-btn.active {
+  background: linear-gradient(45deg, #2196f3, #4caf50);
+  border-color: #2196f3;
+  color: white;
+  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+}
+
+.pagination-btn:disabled {
+  background: #f5f5f5;
+  border-color: #e0e0e0;
+  color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* 이전/다음 버튼 작은 크기 */
+.pagination-btn.nav-btn {
+  padding: 0.4rem 0.5rem;
+  font-size: 0.75rem;
+  min-width: 28px;
+  height: 32px;
+  width: auto;
+}
+
+/* 모바일 대응 페이지네이션 */
+@media (max-width: 768px) {
+  .pagination {
+    gap: 0.2rem;
+    padding: 0.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .pagination-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+    min-width: 32px;
+    height: 32px;
+  }
+  
+  .pagination-btn.nav-btn {
+    padding: 0.3rem 0.4rem;
+    font-size: 0.7rem;
+    min-width: 24px;
+    height: 28px;
+  }
+}
+
+.search-summary {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  color: #666;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* 검색 결과 없음 */
+.no-results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.no-results-card {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  max-width: 500px;
+}
+
+.no-results-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.6;
+}
+
+.no-results-card h3 {
+  color: #333;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.no-results-card p {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.suggestion-section p {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.suggestion-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.suggestion-tags span {
+  background: linear-gradient(45deg, #2196f3, #4caf50);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.suggestion-tags span:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+}
+
+/* ---------- 새로운 3단 레이아웃 스타일 ---------- */
+
+/* 중간 책 섹션 */
+.books-section .books-card {
+  background: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  margin-top: 0.05rem;
+}
+
+.books-section h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+.book-list-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-height: 800px; /* 최대 높이 설정 */
+  overflow-y: auto; /* 스크롤 허용 */
+}
+
+.book-item-compact {
+  display: flex;
+  gap: 0.8rem;
+  padding: 0.8rem;
+  border-radius: 10px;
+  background: #f8f9fa;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 71px; /* 40px(이미지 높이) + 0.8rem*2(패딩) + 약간의 여유 */
+  max-height: 71px; /* 높이 고정으로 레이아웃 안정성 확보 */
+}
+
+.book-item-compact:hover {
+  background: #e3f2fd;
+  transform: translateX(5px);
+}
+
+.book-cover-small {
+  width: 40px;
+  height: 55px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.book-cover-img-small {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.book-info-compact {
+  flex: 1;
+  min-width: 0;
+}
+
+.book-title-compact {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.3rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  line-height: 1.2;
+  max-height: 1.2em; /* 1줄 높이로 제한 */
+}
+
+.book-price-compact {
+  font-size: 0.75rem;
+  color: #2196f3;
+  font-weight: 500;
+}
+
+/* 유튜브 섹션 */
+.youtube-section .youtube-card {
+  background: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  margin-top: 2rem;
+  height: 800px; /* 기본 높이 설정 */
+  display: flex;
+  flex-direction: column;
+}
+
+.youtube-section h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+.youtube-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  flex: 1;
+  overflow-y: auto; /* 스크롤 허용 */
+}
+
+.youtube-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.youtube-item:hover {
+  transform: translateY(-2px);
+}
+
+.youtube-thumbnail {
+  position: relative;
+  width: 100%;
+  height: 130px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.youtube-thumbnail-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.youtube-item:hover .play-button {
+  background: rgba(255, 0, 0, 0.9);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.youtube-info {
+  padding: 0 0.5rem;
+}
+
+.youtube-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.3rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.youtube-channel {
+  font-size: 0.75rem;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.youtube-date {
+  font-size: 0.7rem;
+  color: #999;
+}
+
+/* YouTube 로딩 상태 */
+.youtube-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: #666;
+  font-size: 14px;
+}
+
+.loading-spinner {
+  font-size: 24px;
+  margin-bottom: 8px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* YouTube 영상이 없을 때 */
+.no-youtube {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: #666;
+  text-align: center;
+}
+
+.no-youtube-sub {
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}
+
+/* YouTube 썸네일 클릭 커서 */
+.youtube-thumbnail {
+  cursor: pointer;
+}
+
+.youtube-thumbnail:hover {
+  transform: scale(1.02);
+}
+
+/* ---------- 기존 추천 도서 사이드바 (숨김 처리) ---------- */
+
+/* 오른쪽 영역 폭 고정 */
+.books-sidebar {
+  flex: 0 0 320px;
+  max-width: 320px;
+  margin-top: 2rem;   /* 🔥 추가: 왼쪽 job-cards-grid의 margin-top과 맞추기 */
+}
+
+/* 책 카드 컨테이너 */
+.books-card {
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  position: sticky;
+  top: 2rem;
+  min-height: 800px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.books-card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  border-color: rgba(33, 150, 243, 0.2);
+}
+
+.books-card h3 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  background: linear-gradient(45deg, #2196f3, #4caf50);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.books-card h3:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(45deg, #2196f3, #4caf50);
+  border-radius: 2px;
+}
+
+.books-subtitle {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.8rem;
+  font-style: italic;
+}
+
+/* 리스트 전체 */
+.book-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1rem; /*추가 : 책과 점 사이 공간 */
+}
+
+/* 각 책 카드 한 줄 */
+.book-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 0.9rem;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.book-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(33, 150, 243, 0.1),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.book-item:hover::before {
+  left: 100%;
+}
+
+.book-item:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #ffffff 0%, #f1f8ff 100%);
+  border-color: #2196f3;
+  box-shadow: 0 8px 25px rgba(33, 150, 243, 0.15);
+}
+
+
+/* 표지 영역 (현재는 아이콘만, 나중에 <img> 넣어도 됨) */
+.book-cover {
+  width: 70px;            /* 조금 더 크게 */
+  height: 100px;  
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;      /* 잘라내지 말고 전부 보이게 */
+  box-shadow: none;       /* 필요 없으면 제거 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* 실제 표지 이미지 */
+.book-cover-img {
+  width: 100%;           /* 가로 꽉 채우고 */
+  height: auto;          /* 세로는 비율대로 자동 */
+  object-fit: contain;   /* 잘라내지 말고 비율 유지해서 다 나오게 */
+  display: block;
+  border-radius: 6px;
+}
+
+
+.book-rank {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #ff6b6b;
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 텍스트 영역 */
+.book-info {
+  flex: 1;
+  min-width: 0; /* ellipsis 먹게 하려고 필요 */
+}
+
+/* 제목: 최대 2줄, 넘치면 ... */
+.book-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.4rem;
+  line-height: 1.4;
+
+  /* 2줄까지만 보이고 나머지는 ... */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* 단어(띄어쓰기 기준) 단위로 줄바꿈 시도 */
+  white-space: normal;
+  word-break: keep-all;       /* 가능한 한 단어 중간에서 안 자름(한글은 한계가 있긴 함) */
+}
+
+
+/* 저자/가격 줄 */
+.book-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.book-author {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.book-author::before {
+  content: '👤 ';
+  font-size: 10px;
+}
+
+.book-price {
+  flex-shrink: 0;
+  font-weight: 600;
+  color: #2196f3;
+}
+
+/* 뱃지들 */
+.book-badges {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.badge {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.badge.best-seller {
+  background: linear-gradient(45deg, #ffd700, #ffed4e);
+  color: #8b5a00;
+}
+
+.badge.trending {
+  background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+  color: white;
+}
+
+.badge.recommended {
+  background: linear-gradient(45deg, #4caf50, #66bb6a);
+  color: white;
+}
+
+/* 🔵 오른쪽 아래 화살표 버튼 */
+.book-action {
+  align-self: flex-end;                 /* 아래쪽에 붙게 */
+  margin-left: 0.4rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(33, 150, 243, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.book-item:hover .book-action {
+  background: #2196f3;
+  transform: scale(1.1);
+}
+
+.view-icon {
+  color: #2196f3;
+  font-weight: bold;
+  font-size: 14px;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.book-item:hover .view-icon {
+  color: white;
+}
+
+/* 맨 위 추천 도서 강조 */
+.featured-book {
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  border: 2px solid #ff9800;
+  position: relative;
+}
+
+
+/* 간단한 페이드인 애니메이션 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.book-item {
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+.book-page-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  margin-bottom: 0px;
+}
+
+.book-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: #555;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+}
+
+.book-dot:hover {
+  opacity: 0.9;
+  transform: scale(1.1);
+}
+
+/* 현재 페이지 (빨간 점) */
+.book-dot.active {
+  background: #ff6b6b;
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+/* 인풋 + 아이콘 래퍼 */
+.search-container {
+  position: relative;        /* 아이콘 absolute 기준 */
+  flex: 1;                   /* form 안에서 남는 폭 다 차지 */
+}
+
+/* 인풋 오른쪽에 아이콘 들어갈 여유 패딩 */
+.search-input-page {
+  padding: 1.2rem 3rem 1.2rem 1.5rem;  /* 오른쪽 패딩 유지 */
+}
+
+/* 인풋 안 오른쪽 아이콘 */
+.search-icon {
+  position: absolute;
+  right: -70px;               /* 👉 이 값 키우면 왼쪽으로 더 당겨짐 (18 → 22 → 26 ...) */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 24px;
+  color: #666;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.search-icon:hover {
+  color: #2196f3;
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* 제목 아래 전체 영역 (저자/가격/뱃지 + 화살표) */
+.book-bottom {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.6rem;
+}
+
+/* 왼쪽(저자 + 가격 + 뱃지 묶음) */
+.book-bottom-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1;
+  min-width: 0;
+}
+
+/* 새로운 도서 카드 스타일 */
+.book-cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.book-card-new {
+  position: relative;
+  background: #f8f9fa;
+  border-radius: 20px;
+  padding: 1.2rem;
+  border: 2px solid #ffa726;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  min-height: 120px;
+  margin-bottom: 1rem;
+}
+
+.book-card-new:nth-child(1) {
+  background: #fff9c4;
+  border-color: #ffa726;
+}
+
+.book-card-new:nth-child(2) {
+  background: #f3e5f5;
+  border-color: #e91e63;
+}
+
+.book-card-new:nth-child(3) {
+  background: #e8f5e8;
+  border-color: #4caf50;
+}
+
+.book-card-new:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* 순위 뱃지 */
+.book-rank-badge {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  width: 24px;
+  height: 24px;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 12px;
+  z-index: 2;
+}
+
+.book-card-new:nth-child(1) .book-rank-badge {
+  background: #ff6b6b;
+}
+
+.book-card-new:nth-child(2) .book-rank-badge {
+  background: #e91e63;
+}
+
+.book-card-new:nth-child(3) .book-rank-badge {
+  background: #4caf50;
+}
+
+/* 도서 커버 컨테이너 */
+.book-cover-container {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.book-cover-new {
+  width: 70px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+
+/* 도서 정보 */
+.book-details-new {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  position: relative;
+  padding-right: 3rem;
+  padding-bottom: 2.5rem;
+}
+
+.book-title-new {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.book-price-new {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2196f3;
+  margin-bottom: 0.3rem;
+}
+
+/* 뱃지 스타일 */
+.book-badge {
+  padding: 0.3rem 0.7rem;
+  border-radius: 15px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: white;
+  align-self: flex-start;
+  position: absolute;
+  bottom: 0.6rem;
+  left: 5.5rem;
+}
+
+.badge-bestseller {
+  background: #ffa726;
+}
+
+.badge-rising {
+  background: #e91e63;
+}
+
+.badge-recommended {
+  background: #4caf50;
+}
+
+/* 화살표 */
+.book-arrow {
+  position: absolute;
+  bottom: 0.6rem;
+  right: 0.6rem;
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #666;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.book-card-new:hover .book-arrow {
+  background: #2196f3;
+  color: white;
+  transform: scale(1.1);
+}
+
+/* 페이지 인디케이터 */
+.book-pagination-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ddd;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.dot.active {
+  background: #ff6b6b;
+}
+
+.dot:hover {
+  background: #bbb;
+}

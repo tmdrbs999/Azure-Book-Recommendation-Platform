@@ -1,0 +1,11 @@
+{
+  "networking": {
+    "allowedOrigins": [
+      "https://ambitious-ground-0ef10fd00.3.azurestaticapps.net",
+      "http://localhost:5000" 
+    ]
+  },
+  "globalHeaders": {
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS" 
+  }
+}

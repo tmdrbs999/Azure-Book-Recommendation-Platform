@@ -1,0 +1,40 @@
+.stack-root{
+	/* make header sit flush at the very top like other pages */
+	padding:0 0 20px 0;
+	font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	color:#263238;
+	background: linear-gradient(180deg, #f6fbff 0%, #f2f8fb 50%, #ffffff 100%);
+	min-height:100vh;
+}
+.stack-header{
+	display:flex;
+	align-items:center;
+	gap:16px;
+	padding:18px 28px;
+	background: linear-gradient(90deg,#2196f3 0%, #4caf50 100%);
+	color:#fff;
+	box-shadow: 0 6px 18px rgba(16,24,40,0.06);
+	position: relative; /* allow absolute positioning for back button */
+}
+.stack-header h2{ margin:0; font-size:18px; font-weight:700 }
+.stack-main{margin-top:18px; max-width:1200px; margin-left:auto; margin-right:auto; padding:28px}
+.book-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+.book-card{border:1px solid rgba(15,76,117,0.04);border-radius:12px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;background:#fff;box-shadow:0 6px 20px rgba(16,24,40,0.06);transition:transform 220ms, box-shadow 220ms}
+.book-card:hover{ transform: translateY(-6px); box-shadow: 0 18px 50px rgba(16,24,40,0.08); }
+.book-card-body{min-height:110px}
+.book-title{font-weight:700;margin-bottom:8px;color:#0b3f63}
+.book-author{font-size:13px;color:#6b7785;margin-bottom:8px}
+.book-desc{font-size:13px;color:#333}
+.book-footer{margin-top:12px;font-weight:700;color:#0b79d0}
+.card.empty{padding:24px;background:#fff;border:1px solid #eee;border-radius:8px}
+
+.btn.back-btn{background:#ffffff;color:#0b79d0;border:1px solid #d9e9fb;padding:8px 12px;border-radius:8px;cursor:pointer}
+.stack-header .back-btn{ position:absolute; right:28px; top:50%; transform: translateY(-50%); box-shadow:none }
+.stack-header .back-btn:hover{ box-shadow: 0 8px 26px rgba(11,121,208,0.08); transform: translateY(-50%) translateY(-2px); }
+
+/* responsive tweaks */
+@media (max-width: 900px){
+	.stack-header{flex-direction:column;align-items:flex-start;gap:8px}
+	.stack-header .back-btn{ position: static; transform:none; margin-left:auto; margin-top:8px }
+	.book-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));}
+}

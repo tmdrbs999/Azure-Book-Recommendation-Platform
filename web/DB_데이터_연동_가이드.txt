@@ -1,0 +1,428 @@
+=======================================================
+           📊 DB에서 데이터 끌어오는 방법 가이드
+=======================================================
+
+📅 작성일: 2025년 11월 13일
+🎯 목적: PostgreSQL 데이터베이스와 React 웹 애플리케이션 연동
+
+=======================================================
+1. 📚 기술 스택
+=======================================================
+
+💾 데이터베이스: PostgreSQL (Azure Database)
+🖥️ 백엔드: Node.js + Express.js
+🎨 프론트엔드: React.js
+📦 데이터베이스 연결: pg (node-postgres) 라이브러리
+🔗 통신: REST API
+
+=======================================================
+2. 🔌 데이터베이스 연결 설정
+=======================================================
+
+📍 위치: server.js
+
+// PostgreSQL 연결 설정 (Pool 사용으로 최적화)
+const { Pool } = require('pg');
+
+const pool = new Pool({
+  host: '2dt-1st-team1.postgres.database.azure.com',
+  database: 'postgres',
+  user: 'dt21stteam1',
+  password: '!25Dataschool',
+  port: 5432,
+  ssl: {
+    rejectUnauthorized: false
+  },
+  max: 10, // 최대 연결 수
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 2000,
+});
+
+🔑 핵심 포인트:
+- Pool 사용으로 연결 관리 최적화
+- SSL 설정으로 Azure 연결 보안
+- 연결 풀 설정으로 성능 향상
+
+=======================================================
+3. 🚀 API 엔드포인트 구현
+=======================================================
+
+📍 위치: server.js
+
+🔥 3.1 HOT 공고 데이터 API
+----------------------------------------
+app.get('/api/jobs/hot', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    try {
+      const query = `
+        SELECT 
+          id, title, company, location, salary_type, salary_min, 
+          job_category, created_at, deadline
+        FROM jobs 
+        WHERE status = 'active'
+        ORDER BY created_at DESC 
+        LIMIT 10
+      `;
+      const result = await client.query(query);
+      // 데이터 가공 및 응답
+    } finally {
+      client.release();
+    }
+  } catch (error) {
+    // 에러 처리
+  }
+});
+
+📊 3.2 카테고리 통계 API
+----------------------------------------
+app.get('/api/jobs/categories/top', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    try {
+      const query = `
+        SELECT 
+          job_category,
+          COUNT(*) as job_count,
+          AVG(CASE 
+            WHEN salary_type = '월급' THEN salary_min 
+            WHEN salary_type = '시급' THEN salary_min * 209
+            ELSE salary_min 
+          END) as avg_salary
+        FROM jobs 
+        WHERE status = 'active' 
+        AND job_category IS NOT NULL 
+        AND job_category != ''
+        GROUP BY job_category 
+        HAVING COUNT(*) >= 3
+        ORDER BY job_count DESC, avg_salary DESC
+        LIMIT 10
+      `;
+      const result = await client.query(query);
+      // 결과 데이터 가공
+    } finally {
+      client.release();
+    }
+  } catch (error) {
+    // 에러 처리
+  }
+});
+
+🏷️ 3.3 카테고리별 공고 API
+----------------------------------------
+app.get('/api/jobs/category/:categoryName', async (req, res) => {
+  const { categoryName } = req.params;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
+  
+  try {
+    const client = await pool.connect();
+    try {
+      // 총 개수 조회
+      const countQuery = `
+        SELECT COUNT(*) as total 
+        FROM jobs 
+        WHERE status = 'active' 
+        AND job_category = $1
+      `;
+      
+      // 페이지네이션 데이터 조회
+      const dataQuery = `
+        SELECT id, title, company, location, salary_type, 
+               salary_min, job_category, created_at, deadline
+        FROM jobs 
+        WHERE status = 'active' 
+        AND job_category = $1
+        ORDER BY created_at DESC 
+        LIMIT $2 OFFSET $3
+      `;
+      
+      const countResult = await client.query(countQuery, [categoryName]);
+      const dataResult = await client.query(dataQuery, [categoryName, limit, offset]);
+      
+      // 페이지네이션 정보와 함께 응답
+    } finally {
+      client.release();
+    }
+  } catch (error) {
+    // 에러 처리
+  }
+});
+
+=======================================================
+4. 🎨 프론트엔드 데이터 요청
+=======================================================
+
+📍 위치: src/services/jobService.js
+
+class JobService {
+  // HOT 공고 데이터 가져오기
+  async getHotJobs() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/jobs/hot`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const result = await response.json();
+      
+      if (result.success) {
+        return result.data;
+      } else {
+        throw new Error(result.message || 'Failed to fetch jobs');
+      }
+    } catch (error) {
+      console.error('❌ Error fetching hot jobs:', error);
+      // 폴백 데이터 반환
+      return this.getFallbackData();
+    }
+  }
+
+  // 카테고리 통계 가져오기
+  async getTopCategories() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/jobs/categories/top`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const result = await response.json();
+      
+      if (result.success) {
+        return result.data;
+      } else {
+        throw new Error(result.message || 'Failed to fetch categories');
+      }
+    } catch (error) {
+      console.error('❌ Error fetching categories:', error);
+      return [];
+    }
+  }
+
+  // 카테고리별 공고 가져오기
+  async getJobsByCategory(categoryName, page = 1, limit = 10) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/jobs/category/${encodeURIComponent(categoryName)}?page=${page}&limit=${limit}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const result = await response.json();
+      
+      if (result.success) {
+        return result.data;
+      } else {
+        throw new Error(result.message || 'Failed to fetch category jobs');
+      }
+    } catch (error) {
+      console.error('❌ Error fetching category jobs:', error);
+      return { jobs: [], pagination: { total: 0, page: 1, totalPages: 1 } };
+    }
+  }
+}
+
+=======================================================
+5. 🔄 React 컴포넌트에서 데이터 사용
+=======================================================
+
+📍 위치: src/App.js
+
+function Home() {
+  const [categories, setCategories] = useState([]);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
+
+  // 실시간 HOT 직종 데이터 가져오기
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        console.log('🔥 Loading hot categories from database...');
+        setCategoriesLoading(true);
+        const topCategories = await jobService.getTopCategories();
+        console.log('✅ Received categories:', topCategories);
+        setCategories(topCategories);
+      } catch (error) {
+        console.error('❌ 카테고리 데이터 로딩 실패:', error);
+        setCategories([]);
+      } finally {
+        setCategoriesLoading(false);
+      }
+    };
+
+    // 초기 데이터 로딩
+    fetchCategories();
+
+    // 30초마다 카테고리 데이터 갱신 (실시간 반영)
+    const categoryInterval = setInterval(() => {
+      console.log('🔄 Refreshing hot categories...');
+      fetchCategories();
+    }, 30000);
+
+    // 컴포넌트 언마운트 시 인터벌 정리
+    return () => {
+      clearInterval(categoryInterval);
+    };
+  }, []);
+
+  // JSX에서 데이터 렌더링
+  return (
+    <div className="hot-categories-grid">
+      {categories.slice(0, 6).map((category, index) => (
+        <div key={category.name} className={`hot-category-card ${index === 0 ? 'top-category' : ''}`}>
+          <div className="hot-category-header">
+            <h3>{category.name}</h3>
+            <span className="hot-badge">{index === 0 ? '🔥 TOP' : 'HOT'}</span>
+          </div>
+          <div className="hot-category-info">
+            <span className="job-count">{category.count}개 채용</span>
+            <span className="avg-salary">평균 {category.averageSalary}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+=======================================================
+6. 📊 데이터 가공 및 포맷팅
+=======================================================
+
+💰 급여 데이터 포맷팅
+----------------------------------------
+function formatSalary(salaryType, salaryValue, wageValueMonthly = null) {
+  const value = parseFloat(salaryValue);
+  if (isNaN(value)) return '협의';
+  
+  if (salaryType === '월급') {
+    if (value >= 10000) {
+      return `${Math.floor(value / 10000)}만원`;
+    } else {
+      return `${value.toLocaleString()}원`;
+    }
+  } else if (salaryType === '시급') {
+    const hourly = value.toLocaleString();
+    const monthly = wageValueMonthly ? `(월 ${Math.floor(parseFloat(wageValueMonthly) / 10000)}만원)` : '';
+    return `시급 ${hourly}원 ${monthly}`;
+  } else {
+    return `${Math.floor(value / 10000)}만원`;
+  }
+}
+
+📅 날짜 포맷팅
+----------------------------------------
+function formatDeadline(dateString) {
+  if (!dateString) return '상시채용';
+  
+  try {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  } catch (error) {
+    return '상시채용';
+  }
+}
+
+🏷️ 태그 생성
+----------------------------------------
+function createJobTags(job) {
+  const tags = [];
+  if (job.job_category) tags.push(job.job_category);
+  if (job.location) tags.push(job.location);
+  if (job.salary_type) tags.push(job.salary_type);
+  return tags;
+}
+
+=======================================================
+7. 🔄 실시간 데이터 반영 시스템
+=======================================================
+
+⏰ 자동 갱신 시스템
+----------------------------------------
+- HOT 직종 랭킹: 30초마다 자동 갱신
+- 실시간 통계: 10초마다 갱신 (현재는 제거됨)
+- 에러 처리: 네트워크 오류 시 폴백 데이터 제공
+- 로딩 상태: 사용자에게 데이터 로딩 시각적 피드백
+
+🎯 실시간 반영 메커니즘
+----------------------------------------
+1. 데이터베이스에 새 채용공고 추가
+2. 30초 이내 프론트엔드에서 카테고리 통계 재조회
+3. HOT 직종 랭킹 자동 업데이트
+4. TOP 직종 변경 시 시각적 강조 효과 적용
+
+=======================================================
+8. 🛠️ 에러 처리 및 폴백 시스템
+=======================================================
+
+🚨 에러 처리 전략
+----------------------------------------
+1. 네트워크 오류: 기존 캐시된 데이터 사용
+2. 서버 오류: 폴백 더미 데이터 제공
+3. 데이터 파싱 오류: 기본값으로 대체
+4. 타임아웃: 재시도 로직 구현
+
+💾 폴백 데이터 시스템
+----------------------------------------
+// jobService.js에서 구현된 폴백 데이터
+getFallbackData() {
+  return [
+    {
+      id: 1,
+      title: "🔥 우리들 요양원에서함께일할 요양보호사선생님을 모십니다~",
+      company: "우리들요양원",
+      location: "경기 고양시",
+      salary: "235만원",
+      tags: ["간병인(재가 제외)", "경력 무관", "월급"],
+      isHot: true
+    },
+    // 추가 폴백 데이터...
+  ];
+}
+
+=======================================================
+9. 📈 성능 최적화 팁
+=======================================================
+
+🔧 데이터베이스 최적화
+----------------------------------------
+- 연결 풀 사용으로 연결 오버헤드 감소
+- 인덱스 활용으로 쿼리 성능 향상
+- LIMIT과 OFFSET으로 페이지네이션 구현
+- 집계 함수 활용으로 효율적인 통계 계산
+
+⚡ 프론트엔드 최적화
+----------------------------------------
+- useState와 useEffect로 상태 관리
+- setInterval로 백그라운드 데이터 갱신
+- 로딩 상태 관리로 사용자 경험 향상
+- 에러 바운더리로 안정성 확보
+
+=======================================================
+10. 🚀 배포 및 운영
+=======================================================
+
+📦 환경 설정
+----------------------------------------
+- 환경 변수로 데이터베이스 연결 정보 관리
+- CORS 설정으로 크로스 오리진 요청 허용
+- SSL 연결로 데이터 전송 보안
+- PM2 또는 Forever로 프로덕션 운영
+
+🔍 모니터링
+----------------------------------------
+- 데이터베이스 연결 상태 모니터링
+- API 응답 시간 측정
+- 에러 로그 수집 및 분석
+- 실시간 사용자 활동 추적
+
+=======================================================
+
+✅ 이 가이드를 통해 PostgreSQL 데이터베이스와 React 애플리케이션 간의
+   완전한 데이터 연동 시스템을 구축할 수 있습니다.
+
+🎯 핵심 성과:
+   - 실시간 HOT 직종 랭킹 시스템
+   - 자동 데이터 갱신 메커니즘
+   - 안정적인 에러 처리 및 폴백 시스템
+   - 확장 가능한 API 아키텍처
+
+=======================================================

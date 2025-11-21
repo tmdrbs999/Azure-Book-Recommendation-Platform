@@ -1,0 +1,93 @@
+.book-root{
+    padding:0 0 20px 0; 
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+    background: linear-gradient(180deg,#f6fbff 0%, #f2f8fb 50%, #fff 100%);
+    min-height:100vh
+}
+.book-header{
+    display:flex;
+    align-items:center;
+    padding:18px 28px;
+    background:linear-gradient(90deg,#2196f3 0%, #4caf50 100%);
+    color:#fff;
+    position:relative;
+    box-shadow:0 6px 18px rgba(16,24,40,0.06)
+}
+.book-header h2{
+    margin:0;
+    font-size:18px;
+    font-weight:700
+}
+.book-header .back-btn{
+    position:absolute;
+    right:28px;
+    top:50%;
+    transform:translateY(-50%);
+    background:#fff;
+    color:#0b79d0;
+    border:1px solid #d9e9fb;
+    padding:8px 12px;
+    border-radius:8px
+}
+.book-main{
+    max-width:1200px;
+    margin:0 auto;
+    padding:28px
+}
+.book-detail-card{
+    display:block;
+    padding:18px
+}
+.detail-grid{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:20px;
+    align-items:start
+}
+.cover-placeholder{
+    width:220px;
+    height:auto;
+    background:linear-gradient(180deg,#e9f6ff,#dbeffb);
+    border-radius:8px;
+    box-shadow:0 6px 20px rgba(16,24,40,0.06);
+    border:1px solid rgba(11,121,208,0.04);
+
+    display: flex;
+    align-items: center;
+    justify-content: contain;
+    overflow: hidden;      /* 박스 밖으로 튀어나오는 부분 잘라내기 */
+}
+.cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;     /* 비율 유지하면서 박스를 꽉 채움 (조금 잘릴 수 있음) */
+  display: block;
+}
+.book-title.large{
+    font-size:20px;
+    font-weight:800;
+    margin-bottom:8px;
+    color:#0b3f63
+}
+.book-author{
+    font-size:14px;
+    color:#6b7785;
+    margin-bottom:12px
+}
+.book-desc{
+    font-size:15px;
+    color:#333
+}
+.book-price{
+    margin-top:10px;
+    font-weight:800;
+    color:#0b79d0
+}
+.btn.primary{
+    background:#0b79d0;
+    color:#fff;
+    border-radius:8px;
+    padding:8px 14px;
+    border:none
+}
+@media (max-width:800px){.detail-grid{grid-template-columns:1fr;}.book-header .back-btn{position:static;transform:none;margin-left:auto;margin-top:8px}}

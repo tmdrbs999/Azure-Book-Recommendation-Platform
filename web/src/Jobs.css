@@ -1,0 +1,14 @@
+.jobs-root { font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:#263238; background: linear-gradient(180deg, #f6fbff 0%, #f2f8fb 50%, #ffffff 100%); min-height: 100vh; }
+.jobs-header { padding: 18px 28px; background: linear-gradient(90deg,#2196f3 0%, #4caf50 100%); color: #fff; display:flex; align-items:center; justify-content:flex-start; gap:12px; position: relative; box-shadow: 0 2px 8px rgba(33,150,243,0.08); margin-bottom: 18px; }
+.jobs-header h1 { margin:0; font-size:20px; font-weight:600; letter-spacing:-0.2px; }
+.jobs-main { max-width:1000px; margin:0 auto; padding: 20px 0; }
+.jobs-list { display:flex; flex-direction:column; gap:14px; }
+.job-card { background:#fff; border-radius:10px; padding:16px; box-shadow: 0 8px 24px rgba(10,40,60,0.06); border:1px solid rgba(10,60,100,0.03); }
+.job-header { display:flex; align-items:center; gap:8px; }
+.job-header h3 { margin:0; }
+.new-badge { background:#ff4757; color:#fff; padding:4px 8px; border-radius:8px; font-size:12px; }
+.job-meta { color:#63707a; font-size:13px; margin-top:8px; }
+.job-excerpt { color:#37474f; margin-top:10px; }
+.job-actions { margin-top:12px; }
+.back-btn { background:#ffffff; color:#0b79d0; border:1px solid #d9e9fb; box-shadow:none; padding:8px 10px; border-radius:8px; }
+.jobs-header .back-btn { position: absolute; right: 28px; top: 50%; transform: translateY(-50%); }

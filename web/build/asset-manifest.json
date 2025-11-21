@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0355ea40.css",
+    "main.js": "/static/js/main.b89b93ba.js",
+    "static/js/488.8704cc38.chunk.js": "/static/js/488.8704cc38.chunk.js",
+    "static/media/ccpp-logo.svg": "/static/media/ccpp-logo.619b1c2146c9f9909c85a4fa20290bb2.svg",
+    "index.html": "/index.html",
+    "main.0355ea40.css.map": "/static/css/main.0355ea40.css.map",
+    "main.b89b93ba.js.map": "/static/js/main.b89b93ba.js.map",
+    "488.8704cc38.chunk.js.map": "/static/js/488.8704cc38.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0355ea40.css",
+    "static/js/main.b89b93ba.js"
+  ]
+}

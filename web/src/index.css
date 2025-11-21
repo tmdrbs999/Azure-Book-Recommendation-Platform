@@ -1,0 +1,11 @@
+/* Minimal index styles to satisfy import
+   Add app-level resets or global styles here as needed */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: #fafafa;
+  color: #222;
+}
+
+a { color: inherit; }

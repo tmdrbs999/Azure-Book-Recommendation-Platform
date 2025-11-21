@@ -1,0 +1,19 @@
+# data 폴더는 포함 (코드에 data에 csv에 저장되게 설정되어 있음)
+!data/
+
+# 하지만 gitkeep은 포함 (빈 폴더는 인식 못할 수도 있어서)
+!data/.gitkeep
+
+# CSV 파일은 github에 업로드 x (Local에만 저장)
+data/*.csv
+
+# 제외할 파일들
+api-connect-test/gyeonggiwork.py
+api-connect-test/saramin.py
+api-connect-test/seoulwork.py
+api-connect-test/work24.py
+local.settings.json
+*.csv
+
+# for ggdata
+api-func-connect-ggdata/_function_app_.py
